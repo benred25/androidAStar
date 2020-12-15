@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/draw"
+        android:title="Draw" />
+    <item
+        android:id="@+id/erase"
+        android:title="Erase" />
+    <item
+        android:id="@+id/start"
+        android:title="Start" />
+    <item
+        android:id="@+id/clear"
+        android:title="Clear" />
+</menu>
