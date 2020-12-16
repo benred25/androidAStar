@@ -6,13 +6,35 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    SketchController controller = new SketchController();
+    SketchModel model = new SketchModel();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SketchView sketchView = new SketchView(this);
+
+        LinearLayout root = findViewById(R.id.root);
+        root.addView(sketchView);
+
+        sketchView.setModel(model);
+        sketchView.setController(controller);
+        controller.setModel(model);
+        model.addSubscriber(sketchView);
+        model.spotHeight = sketchView.rowGap;
+        model.spotWidth = sketchView.colGap;
+        model.createGrid();
+
+
+
+
     }
 
     @Override
