@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         sketchView.setController(controller);
         controller.setModel(model);
         model.addSubscriber(sketchView);
+
+
         model.spotHeight = sketchView.rowGap;
         model.spotWidth = sketchView.colGap;
         model.createGrid();
@@ -65,18 +67,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void draw() {
-
+        model.setDrawing(true);
     }
 
     public void erase() {
-
+        model.setDrawing(false);
     }
 
     public void start() {
-
+        controller.run();
     }
 
     public void clear() {
-
+        model.reset();
+        controller.makeReady();
     }
 }

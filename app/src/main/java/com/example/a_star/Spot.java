@@ -12,6 +12,8 @@ public class Spot {
     float x, y;
     float midx, midy;
     int color;
+    float f_score, g_score;
+    int count;
     ArrayList<Spot> neighbors;
 
 
@@ -27,11 +29,78 @@ public class Spot {
         this.midx = this.x + ((float)this.width / 2);
         this.midy = this.y + ((float)this.height / 2);
         this.color = Color.WHITE;
+        this.f_score = 0f;
+        this.g_score = 0f;
+        this.count = -1;
         this.neighbors = new ArrayList<>();
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getMidx() {
+        return midx;
+    }
+
+    public void setMidx(float midx) {
+        this.midx = midx;
+    }
+
+    public float getMidy() {
+        return midy;
+    }
+
+    public void setMidy(float midy) {
+        this.midy = midy;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public Pair<Integer, Integer> get_pos() {
         return new Pair(this.row, this.col);
+    }
+
+    public float getF_score() {
+        return f_score;
+    }
+
+    public void setF_score(float f_score) {
+        this.f_score = f_score;
+    }
+
+    public float getG_score() {
+        return g_score;
+    }
+
+    public void setG_score(float g_score) {
+        this.g_score = g_score;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public boolean is_closed() {
@@ -59,7 +128,7 @@ public class Spot {
     }
 
     public void make_closed() {
-        this.color = Color.BLACK;
+        this.color = Color.RED;
     }
 
     public void make_open() {
@@ -82,8 +151,65 @@ public class Spot {
         this.color = Color.MAGENTA;
     }
 
-    public void update_neighbors(List<List<Spot>> grid) {
+    public ArrayList<Spot> getNeighbors() {
+        return neighbors;
+    }
 
+    public void update_neighbors(List<List<Spot>> grid) {
+        this.neighbors.clear();
+
+        if (row < total_rows - 1 && !grid.get(row+1).get(col).is_barrier()) {
+            neighbors.add(grid.get(row+1).get(col));
+        }
+
+        if (row > 0 && !grid.get(row-1).get(col).is_barrier()) {
+            neighbors.add(grid.get(row-1).get(col));
+        }
+
+        if (col < total_cols - 1 && !grid.get(row).get(col+1).is_barrier()) {
+            neighbors.add(grid.get(row).get(col+1));
+        }
+
+        if (col > 0 && !grid.get(row).get(col-1).is_barrier()) {
+            neighbors.add(grid.get(row).get(col-1));
+        }
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.Display;
+import android.view.SurfaceView;
 import android.view.View;
 
 import java.util.List;
@@ -37,7 +38,7 @@ class SketchView extends View implements SketchListener {
         maxY = size.y;
         rows = 48;
         cols = 24;
-        rowGap = maxX / rows * 2;
+        rowGap = maxX / rows * 2 + 1;
         colGap = maxY / cols / 2;
     }
 
@@ -76,7 +77,6 @@ class SketchView extends View implements SketchListener {
             }
         }
     }
-
 
     @Override
     public void modelChanged() {
