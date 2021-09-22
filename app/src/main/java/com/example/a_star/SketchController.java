@@ -17,7 +17,7 @@ public class SketchController implements View.OnTouchListener {
 
     }
 
-    public void run() {
+    public void run() throws InterruptedException {
         currentState = State.RUNNING;
 
         for (List<Spot> l : model.spotGrid) {

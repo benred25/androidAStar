@@ -13,7 +13,7 @@ public class Spot {
     float midx, midy;
     int color;
     float f_score, g_score;
-    int count;
+    Spot parent;
     ArrayList<Spot> neighbors;
 
 
@@ -31,7 +31,7 @@ public class Spot {
         this.color = Color.WHITE;
         this.f_score = 0f;
         this.g_score = 0f;
-        this.count = -1;
+        this.parent = null;
         this.neighbors = new ArrayList<>();
     }
 
@@ -95,12 +95,12 @@ public class Spot {
         this.g_score = g_score;
     }
 
-    public int getCount() {
-        return count;
+    public Spot getParent() {
+        return parent;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setParent(Spot parent) {
+        this.parent = parent;
     }
 
     public boolean is_closed() {

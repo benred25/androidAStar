@@ -1,6 +1,8 @@
 package com.example.a_star;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Hashtable;
@@ -223,7 +225,7 @@ public class SketchModel {
 //
 //    }
 
-    public void findPath() {
+    public void findPath() throws InterruptedException {
         Queue<Spot> open = new PriorityQueue<>(new CustomComparator());
         ArrayList<Spot> closed = new ArrayList<>();
         this.start.setF_score(0);
@@ -231,23 +233,30 @@ public class SketchModel {
 
         while (!open.isEmpty()) {
             Spot current = open.poll();
-            current.make_closed();
             closed.add(current);
-
 
             if (current == this.end) {
                 // TODO this is when it finds the path
+                Spot path = current;
+                while (path.getParent() != this.start) {
+                    path.make_path();
+                    path = path.getParent();
+                }
+                path.make_path();
+                this.end.make_end();
                 this.notifySubscribers();
-                System.out.println("found it");
                 return;
             }
 
             for (Spot neighbor : current.getNeighbors()) {
+                if (neighbor.getParent() == null) {
+                    neighbor.setParent(current);
+                }
                 if (closed.contains(neighbor)) {
                     continue;
                 }
 
-                neighbor.setG_score(current.getG_score() + 44.5f);
+                neighbor.setG_score(current.getG_score() + 45f);
                 neighbor.setF_score(neighbor.getG_score() + h(neighbor, this.end));
 
                 for (Spot open_spot : open) {
@@ -255,10 +264,12 @@ public class SketchModel {
                         continue;
                     }
                 }
-
+                neighbor.make_open();
                 open.add(neighbor);
 
             }
+
+            if (current != this.start) current.make_closed();
         }
 
     }

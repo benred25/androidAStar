@@ -3,6 +3,7 @@ package com.example.a_star;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
     SketchController controller = new SketchController();
     SketchModel model = new SketchModel();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
         model.spotWidth = sketchView.colGap;
         model.createGrid();
 
-
-
-
     }
 
     @Override
@@ -57,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 erase();
                 break;
             case R.id.start:
-                start();
+                try {
+                    start();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.clear:
                 clear();
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         model.setDrawing(false);
     }
 
-    public void start() {
+    public void start() throws InterruptedException {
         controller.run();
     }
 
